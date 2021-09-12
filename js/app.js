@@ -1,6 +1,6 @@
 const loadProducts = () => {
-    // const url = `https://fakestoreapi.com/products`;
-    const url = `http://127.0.0.1:5500/db.json`;
+    const url = `https://fakestoreapi.com/products`;
+    // const url = `http://127.0.0.1:5500/db.json`;
     fetch(url)
         .then(response => response.json())
         .then(data => showProducts(data));
@@ -25,10 +25,37 @@ const showProducts = products => {
       <h2>Price: $ ${product.price}</h2>
       <div class="mt-auto mb-3">
       <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button> 
-      <button id="details-btn" class="btn btn-danger">Details</button></div></div>
+      <button onclick="showDetails(${product.id})" id="details-btn" class="btn btn-danger">Details</button></div></div>
       `;
         document.getElementById('all-products').appendChild(div);
     }
+};
+
+const showDetails = detailsId => {
+    const url = `https://fakestoreapi.com/products/${detailsId}`;
+    fetch(url)
+        .then(res => res.json())
+        .then(data => showIdDetails(data));
+};
+
+const showIdDetails = data => {
+    // console.log(data);
+    const showDetailsById = document.getElementById('show-details');
+    showDetailsById.innerHTML = '';
+    const div = document.createElement('div');
+    div.classList.add('card');
+    div.innerHTML = `
+    <img src="${data.image}" class=" card-img-top" alt="..." />
+                    <div class="card-body">
+                        <h3 class="card-title">${data.title}</h3>
+                        <p class="card-text">
+                            ${data.description}
+                        </p>
+                        <p>Category: ${data.category}</p>
+                        <h2>Price: $ ${data.price}</h2>
+                    </div>
+    `;
+    showDetailsById.appendChild(div);
 };
 let count = 0;
 const addToCart = (id, price) => {
