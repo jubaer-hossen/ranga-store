@@ -41,7 +41,7 @@ const showDetails = detailsId => {
 const showIdDetails = data => {
     // console.log(data);
     const showDetailsById = document.getElementById('show-details');
-    showDetailsById.innerHTML = '';
+    showDetailsById.textContent = '';
     const div = document.createElement('div');
     div.classList.add('card');
     div.innerHTML = `
@@ -84,7 +84,7 @@ const updatePrice = (id, value) => {
 
 // set innerText function
 const setInnerText = (id, value) => {
-    document.getElementById(id).innerText = Math.round(value);
+    document.getElementById(id).innerText = parseFloat(value).toFixed(2);
 };
 
 // update delivery charge and total Tax
